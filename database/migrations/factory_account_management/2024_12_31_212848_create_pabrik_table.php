@@ -8,8 +8,8 @@ class CreatePabrikTable extends Migration
     {
         Schema::create('pabrik', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_pabrik');
-            $table->string('kode_pabrik')->unique();
+            $table->string('nama_perusahaan');
+            $table->string('kode_perusahaan')->unique();
             $table->text('alamat');
             $table->string('nomor_telepon');
             $table->string('email')->unique();
