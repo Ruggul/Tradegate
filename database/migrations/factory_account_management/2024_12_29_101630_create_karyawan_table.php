@@ -11,10 +11,9 @@ class CreateKaryawanPabrikTable extends Migration
      */
     public function up()
     {
-        Schema::create('karyawan_perushaan', function (Blueprint $table) {
+        Schema::create('karyawan', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_perushaan')->constrained('pabrik')->onDelete('cascade');
-            $table->foreignId('id_karyawan')->constrained('users')->onDelete('cascade');
+            $table->foreignId('nama_karyawan')->constrained('users')->onDelete('cascade');
             $table->string('nomor_karyawan')->unique();
             $table->string('jabatan');
             $table->date('tanggal_bergabung');
