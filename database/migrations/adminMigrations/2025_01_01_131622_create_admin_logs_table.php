@@ -18,7 +18,7 @@ class CreateAdminLogsTable extends Migration
             $table->text('user_agent')->nullable();
             $table->timestamps();
 
-            $table->foreign('admin_id')->references('id')->on('users');
+            $table->foreign('admin_id')->references('id')->on('admins');
         });
     }
 
