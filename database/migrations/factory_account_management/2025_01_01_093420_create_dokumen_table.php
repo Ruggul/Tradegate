@@ -11,4 +11,14 @@ class CreatePabrikTable extends Migration
             $table->foreignId('id_perusahaan')->constrained('pabrik')->onDelete('cascade');
             $table->string('nama_dokumen');
             $table->string('jenis_dokumen');
-            
+            $table->date('tanggal_terbit');
+            $table->timestamps();
+            $table->softDeletes();
+        });
+    }
+
+    public function down()
+    {
+        Schema::dropIfExists('dokumen');
+    }
+} 
