@@ -7,7 +7,7 @@
 @section('content')
 <div class="container-perusahaan">
     <div class="card-perusahaan">
-        <div class="card-header-perusahaan">
+        <div class="card-header">
             <div class="d-flex justify-content-between align-items-center">
                 <h3>Daftar Perusahaan</h3>
                 <a href="{{ route('perusahaan.create') }}" class="btn btn-primary">
@@ -16,7 +16,7 @@
             </div>
         </div>
 
-        <div class="card-body-perusahaan">
+        <div class="card-body">
             @if (session('success'))
                 <div class="alert alert-success">
                     {{ session('success') }}
@@ -63,7 +63,7 @@
                             <tr>
                                 <td colspan="7" class="text-center">Tidak ada data</td>
                             </tr>
-                        @endforelse
+                        @endforeach
                     </tbody>
                 </table>
             </div>
