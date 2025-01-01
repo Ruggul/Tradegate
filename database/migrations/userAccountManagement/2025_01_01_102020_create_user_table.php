@@ -11,14 +11,4 @@ class CreateUserTable extends Migration
             $table->string('username')->unique();
             $table->string('email')->unique();
             $table->string('password');
-            $table->rememberToken();
-            $table->timestamps();
-            $table->softDeletes();
-        });
-    }
-
-    public function down()
-    {
-        Schema::dropIfExists('user');
-    }
-} 
+            
