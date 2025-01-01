@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\AdminLog;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 
 class AdminLogController extends Controller
 {
     /**
      * Display a listing of admin logs
      */
-    public function index(Request $request)
+    public function index(Request $request) : View
     {
         $query = AdminLog::with('admin')->latest();
 
@@ -31,7 +32,7 @@ class AdminLogController extends Controller
     /**
      * Show specific log details
      */
-    public function show(AdminLog $log)
+    public function show(AdminLog $log) : View
     {
         return view('admin.logs.show', compact('log'));
     }
@@ -39,7 +40,7 @@ class AdminLogController extends Controller
     /**
      * Clear logs older than specified days
      */
-    public function clear(Request $request)
+    public function clear(Request $request) : RedirectResponse
     {
         $days = $request->input('days', 30);
         

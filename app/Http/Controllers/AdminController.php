@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Admin;
 use App\Models\AdminLog;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -11,13 +12,13 @@ use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
 {
-    public function index()
+    public function index() : View
     {
         $admins = Admin::paginate(10);
         return view('admin.index', compact('admins'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request) : RedirectResponse
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -39,7 +40,7 @@ class AdminController extends Controller
         return redirect()->route('admin.index')->with('success', 'Admin created successfully');
     }
 
-    public function update(Request $request, Admin $admin)
+    public function update(Request $request, Admin $admin) : RedirectResponse
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -70,7 +71,7 @@ class AdminController extends Controller
         return redirect()->route('admin.index')->with('success', 'Admin updated successfully');
     }
 
-    public function destroy(Admin $admin)
+    public function destroy(Admin $admin) : RedirectResponse
     {
         if ($admin->isSuperAdmin()) {
             return back()->with('error', 'Cannot delete super admin');
@@ -88,7 +89,7 @@ class AdminController extends Controller
         return redirect()->route('admin.index')->with('success', 'Admin deleted successfully');
     }
 
-    public function toggleStatus(Admin $admin)
+    public function toggleStatus(Admin $admin) : RedirectResponse
     {
         if ($admin->isSuperAdmin()) {
             return back()->with('error', 'Cannot change super admin status');
