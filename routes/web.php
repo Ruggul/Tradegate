@@ -5,38 +5,22 @@ use App\Http\Controllers\UserCartManagement\CartController;
 use App\Http\Controllers\adminControllers\AdminController;
 use App\Http\Controllers\adminControllers\AdminLogController;
 
-// Landing Page
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+//Admin (Rayhan)
+Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
+Route::post('/admin', [\App\Http\Controllers\AdminController::class, 'store'])->name('admin.store');
+Route::put('/admin/{admin}', [\App\Http\Controllers\AdminController::class, 'update'])->name('admin.update');
+Route::delete('/admin/{admin}', [\App\Http\Controllers\AdminController::class, 'destroy'])->name('admin.destroy');
+Route::patch('/admin/{admin}/toggle-status', [\App\Http\Controllers\AdminController::class, 'toggleStatus'])->name('admin.toggle-status');
 
-// Basic Pages
-Route::get('/about', function () {
-    return view('pages.about');
-})->name('about');
+// Admin Log routes
+Route::get('/admin-logs', [\App\Http\Controllers\AdminLogController::class, 'index'])->name('admin-logs.index');
+Route::get('/admin-logs/{log}', [\App\Http\Controllers\AdminLogController::class, 'show'])->name('admin-logs.show');
 
-Route::get('/contact', function () {
-    return view('pages.contact');
-})->name('contact');
+// Optional: Export logs
+Route::get('/admin-logs/export', [\App\Http\Controllers\AdminLogController::class, 'export'])->name('admin-logs.export');
 
-Route::get('/products', function () {
-    return view('pages.products');
-})->name('products');
-
-Route::get('/privacy-policy', function () {
-    return view('pages.privacy');
-})->name('privacy-policy');
-
-// Admin Routes
-Route::prefix('admin')->name('admin.')->middleware(['admin'])->group(function () {
-    // Admin Account Management
-    Route::resource('accounts', AdminController::class);
-    Route::patch('accounts/{admin}/toggle-status', [AdminController::class, 'toggleStatus'])
-         ->name('accounts.toggle-status');
-    
-    // Admin Logs
-    Route::get('logs', [AdminLogController::class, 'index'])->name('logs.index');
-});
+// Optional: Filter logs
+Route::get('/admin-logs/filter', [\App\Http\Controllers\AdminLogController::class, 'filter'])->name('admin-logs.filter');
 
 Route::prefix('keranjang')->group(function () {
     Route::get('/{id_pengguna}', [CartController::class, 'show']); // Menampilkan isi keranjang
