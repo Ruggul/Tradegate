@@ -15,7 +15,7 @@ class Dokumen extends Model
 
     // Kolom yang bisa diisi
     protected $fillable = [
-        'id_perusahaan',
+        'nama_perusahaan',
         'nama_dokumen',
         'jenis_dokumen',
         'tanggal_terbit',
