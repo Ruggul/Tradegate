@@ -6,7 +6,7 @@ class CreatePabrikTable extends Migration
 {
     public function up()
     {
-        Schema::create('pabrik', function (Blueprint $table) {
+        Schema::create('perusahaan', function (Blueprint $table) {
             $table->id();
             $table->string('nama_perusahaan');
             $table->string('kode_perusahaan')->unique();
