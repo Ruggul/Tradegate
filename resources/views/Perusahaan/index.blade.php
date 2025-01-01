@@ -33,18 +33,16 @@
                             <th>Alamat</th>
                             <th>Telepon</th>
                             <th>Email</th>
-                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($perusahaan as $index => $item)
+                        @forelse ($perusahaan as $perusahaan)
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $item->nama_perusahaan }}</td>
-                                <td>{{ $item->kode_perusahaan }}</td>
-                                <td>{{ $item->alamat }}</td>
-                                <td>{{ $item->nomor_telepon }}</td>
-                                <td>{{ $item->email }}</td>
+                                <td>{{ $perusahaan->nama_perusahaan }}</td>
+                                <td>{{ $perusahaan->kode_perusahaan }}</td>
+                                <td>{{ $perusahaan->alamat }}</td>
+                                <td>{{ $perusahaan->nomor_telepon }}</td>
+                                <td>{{ $perusahaan->email }}</td>
                                 <td>
                                     <a href="{{ route('perusahaan.show', $item->id) }}" class="btn btn-info btn-sm">
                                         <i class="fas fa-eye"></i>
