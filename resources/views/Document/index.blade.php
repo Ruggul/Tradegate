@@ -22,7 +22,7 @@
                 <table class="table">
                     <thead>
                         <tr>
-                            <th>Perusahaan</th>
+                            <th>Nama Perusahaan</th>
                             <th>Nama Dokumen</th>
                             <th>Jenis</th>
                             <th>Tanggal Terbit</th>
@@ -32,7 +32,7 @@
                     <tbody>
                         @foreach($dokumen as $dokumen)
                             <tr>
-                                <td>{{ $dokumen->perusahaan->nama_perusahaan }}</td>
+                                <td>{{ $dokumen->nama_perusahaan }}</td>
                                 <td>{{ $dokumen->nama_dokumen }}</td>
                                 <td>{{ $dokumen->jenis_dokumen }}</td>
                                 <td>{{ $dokumen->tanggal_terbit }}</td>
