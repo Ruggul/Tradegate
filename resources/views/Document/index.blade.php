@@ -26,7 +26,7 @@
                             <th>Nama Dokumen</th>
                             <th>Jenis</th>
                             <th>Tanggal Terbit</th>
-                            <th>Aksi</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -36,6 +36,7 @@
                                 <td>{{ $dokumen->nama_dokumen }}</td>
                                 <td>{{ $dokumen->jenis_dokumen }}</td>
                                 <td>{{ $dokumen->tanggal_terbit }}</td>
+                                <td>{{ $item->status_aktif ? 'Aktif' : 'Tidak Aktif' }}</td>
                                 <td>
                                     <a href="{{ route('dokumen.edit', $item->id) }}" class="btn btn-warning btn-sm">Edit</a>
                                     <form action="{{ route('dokumen.destroy', $item->id) }}" method="POST" style="display:inline">
