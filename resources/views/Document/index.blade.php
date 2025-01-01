@@ -27,6 +27,7 @@
                             <th>Jenis</th>
                             <th>Tanggal Terbit</th>
                             <th>Status</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
