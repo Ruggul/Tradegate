@@ -27,7 +27,6 @@
                 <table class="table-perusahaan">
                     <thead>
                         <tr>
-                            <th>No</th>
                             <th>Nama Perusahaan</th>
                             <th>Kode</th>
                             <th>Alamat</th>
