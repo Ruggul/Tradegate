@@ -8,7 +8,7 @@ class CreateDokumenTable extends Migration
     {
         Schema::create('dokumen', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('id_perusahaan')->constrained('pabrik')->onDelete('cascade');
+            $table->foreignId('nama_perusahaan')->constrained('perusahaan')->onDelete('cascade');
             $table->string('nama_dokumen');
             $table->string('jenis_dokumen');
             $table->date('tanggal_terbit');
