@@ -19,26 +19,19 @@ class Karyawan extends Model
         'nomor_karyawan',
         'jabatan',
         'tanggal_bergabung',
-        'status_aktif'
     ];
 
     // Casting tipe data
     protected $casts = [
-        'tanggal_bergabung' => 'date',
-        'status_aktif' => 'boolean'
+        'tanggal_bergabung' => 'date'
     ];
 
     // Relasi dengan Pabrik
-    public function karyawan ()
+    public function pabrik()
     {
-        return $this->belongsTo(karyawan::class, 'id_pabrik');
+        return $this->belongsTo(Pabrik::class, 'id_pabrik');
     }
 
-    // Scope untuk karyawan aktif
-    public function scopeAktif($query)
-    {
-        return $query->where('status_aktif', true);
-    }
 
     // Scope untuk mencari berdasarkan nomor karyawan
     public function scopeNomorKaryawan($query, $nomor)
