@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('carts', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->timestamps();
+        Schema::create('keranjang', function (Blueprint $table) {
+        $table->id();
+        $table->foreignId('id_pengguna')->constrained('users')->onDelete('cascade');
+        $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('carts');
+        Schema::dropIfExists('keranjang');
     }
 };

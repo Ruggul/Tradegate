@@ -9,17 +9,11 @@ class Cart extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id'];
+    protected $table = 'keranjang'; // Nama tabel
+    protected $fillable = ['id_pengguna'];
 
-    // Relasi ke User
-    public function user()
+    public function items()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    // Relasi ke CartItem
-    public function cartItems()
-    {
-        return $this->hasMany(CartItem::class);
+        return $this->hasMany(CartItem::class, 'id_keranjang');
     }
 }

@@ -9,11 +9,12 @@ class Product extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'description', 'price', 'stock'];
+    protected $table = 'produk'; // Nama tabel
+    protected $fillable = ['nama', 'deskripsi', 'harga', 'stok'];
 
     // Relasi ke CartItem
     public function cartItems()
     {
-        return $this->hasMany(CartItem::class);
+        return $this->hasMany(CartItem::class, 'id_produk');
     }
 }

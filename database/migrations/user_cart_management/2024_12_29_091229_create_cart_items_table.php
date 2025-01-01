@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('cart_items', function (Blueprint $table) {
+        Schema::create('item_keranjang', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('cart_id')->constrained('carts')->onDelete('cascade');
-            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
-            $table->integer('quantity');
+            $table->foreignId('id_keranjang')->constrained('keranjang')->onDelete('cascade');
+            $table->foreignId('id_produk')->constrained('produk')->onDelete('cascade');
+            $table->integer('jumlah');
             $table->timestamps();
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('cart_items');
+        Schema::dropIfExists('item_keranjang');
     }
 };
