@@ -17,35 +17,51 @@
                     @method('PUT')
                     
                     <div class="mb-3">
-                        <label>Nama Perusahaan</label>
-                        <input type="text" name="nama_perusahaan" class="form-control" 
-                               value="{{ $perusahaan->nama_perusahaan }}" required>
+                        <label class="form-label">Nama Perusahaan</label>
+                        <input type="text" class="form-control @error('nama_perusahaan') is-invalid @enderror" 
+                            name="nama_perusahaan" value="{{ old('nama_perusahaan', $perusahaan->nama_perusahaan) }}">
+                        @error('nama_perusahaan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
-                        <label>Kode Perusahaan</label>
-                        <input type="text" name="kode_perusahaan" class="form-control" 
-                               value="{{ $perusahaan->kode_perusahaan }}" required>
+                        <label class="form-label">Kode Perusahaan</label>
+                        <input type="text" class="form-control @error('kode_perusahaan') is-invalid @enderror" 
+                            name="kode_perusahaan" value="{{ old('kode_perusahaan', $perusahaan->kode_perusahaan) }}">
+                        @error('kode_perusahaan')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
-                        <label>Alamat</label>
-                        <textarea name="alamat" class="form-control" required>{{ $perusahaan->alamat }}</textarea>
+                        <label class="form-label">Alamat</label>
+                        <textarea class="form-control @error('alamat') is-invalid @enderror" 
+                            name="alamat">{{ old('alamat', $perusahaan->alamat) }}</textarea>
+                        @error('alamat')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
-                        <label>Nomor Telepon</label>
-                        <input type="text" name="nomor_telepon" class="form-control" 
-                               value="{{ $perusahaan->nomor_telepon }}" required>
+                        <label class="form-label">Nomor Telepon</label>
+                        <input type="text" class="form-control @error('nomor_telepon') is-invalid @enderror" 
+                            name="nomor_telepon" value="{{ old('nomor_telepon', $perusahaan->nomor_telepon) }}">
+                        @error('nomor_telepon')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
-                        <label>Email</label>
-                        <input type="email" name="email" class="form-control" 
-                               value="{{ $perusahaan->email }}" required>
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" 
+                            name="email" value="{{ old('email', $perusahaan->email) }}">
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
-                    <div>
+                    <div class="mb-3">
                         <a href="{{ route('perusahaan.index') }}" class="btn btn-secondary">Kembali</a>
                         <button type="submit" class="btn btn-primary">Update</button>
                     </div>
