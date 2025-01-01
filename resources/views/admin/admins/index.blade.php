@@ -45,7 +45,7 @@
                                 {{ ucfirst(str_replace('_', ' ', $admin->role)) }}
                             </span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
+                        <td class="px-6 py-3 whitespace-nowrap">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $admin->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                 {{ $admin->is_active ? 'Active' : 'Inactive' }}
                             </span>
@@ -53,14 +53,14 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                             <button onclick="openEditModal({{ $admin->id }})" class="text-indigo-600 hover:text-indigo-900 mr-3">Edit</button>
                             @if(!$admin->isSuperAdmin())
-                                <form action="{{ route('admin.toggle-status', $admin) }}" method="POST" class="inline">
+                                <form action="{{ route('admin.admins.toggle-status', $admin) }}" method="POST" class="inline">
                                     @csrf
                                     @method('PATCH')
                                     <button type="submit" class="text-yellow-600 hover:text-yellow-900 mr-3">
                                         {{ $admin->is_active ? 'Deactivate' : 'Activate' }}
                                     </button>
                                 </form>
-                                <form action="{{ route('admin.destroy', $admin) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this admin?');">
+                                <form action="{{ route('admin.admins.destroy', $admin) }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to delete this admin?');">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="text-red-600 hover:text-red-900">Delete</button>

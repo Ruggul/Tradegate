@@ -6,12 +6,12 @@
     <div class="flex justify-between items-center">
         <h1 class="text-3xl font-bold text-gray-900">Admin Logs</h1>
         <div class="flex space-x-4">
-            <form action="{{ route('admin-logs.export') }}" method="GET" class="inline">
+            <form action="{{ route('admin.logs.export') }}" method="GET" class="inline">
                 <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                     Export PDF
                 </button>
             </form>
-            <form action="{{ route('admin-logs.clear') }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to clear old logs?');">
+            <form action="{{ route('admin.logs.clear') }}" method="POST" class="inline" onsubmit="return confirm('Are you sure you want to clear old logs?');">
                 @csrf
                 <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
                     Clear Old Logs
@@ -24,7 +24,7 @@
 @section('content')
     <!-- Filters -->
     <div class="bg-white p-6 rounded-lg shadow mb-6">
-        <form action="{{ route('admin-logs.filter') }}" method="GET">
+        <form action="{{ route('admin.logs.filter') }}" method="GET">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
                     <label class="block text-sm font-medium text-gray-700">Date From</label>

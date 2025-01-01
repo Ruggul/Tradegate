@@ -3,21 +3,40 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserCartManagement\CartController;
 use App\Http\Controllers\adminControllers\AdminController;
+use App\Http\Controllers\adminControllers\AdminAuthController;
 use App\Http\Controllers\adminControllers\AdminLogController;
 
-//Admin (Rayhan)
-Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('admin.index');
-Route::post('/admin', [\App\Http\Controllers\AdminController::class, 'store'])->name('admin.store');
-Route::put('/admin/{admin}', [\App\Http\Controllers\AdminController::class, 'update'])->name('admin.update');
-Route::delete('/admin/{admin}', [\App\Http\Controllers\AdminController::class, 'destroy'])->name('admin.destroy');
-Route::patch('/admin/{admin}/toggle-status', [\App\Http\Controllers\AdminController::class, 'toggleStatus'])->name('admin.toggle-status');
+// Admin Auth Routes (Public)
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('login', [AdminAuthController::class, 'login']);
+    Route::post('logout', [AdminAuthController::class, 'logout'])->name('admin.logout');
+});
 
-// Admin Log (Rayhan)
-Route::get('/admin-logs', [\App\Http\Controllers\AdminLogController::class, 'index'])->name('admin-logs.index');
-Route::get('/admin-logs/{log}', [\App\Http\Controllers\AdminLogController::class, 'show'])->name('admin-logs.show');
-Route::get('/admin-logs/export', [\App\Http\Controllers\AdminLogController::class, 'export'])->name('admin-logs.export');
-Route::get('/admin-logs/filter', [\App\Http\Controllers\AdminLogController::class, 'filter'])->name('admin-logs.filter');
-Route::post('/admin-logs/clear', [\App\Http\Controllers\AdminLogController::class, 'clear'])->name('admin-logs.clear');
+// Admin Protected Routes
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'middleware' => ['auth.admin']], function () {
+    // Dashboard
+    Route::get('/', [AdminController::class, 'dashboard'])->name('dashboard');
+    
+    // Admin Management
+    Route::group(['prefix' => 'admins'], function () {
+        Route::get('/', [AdminController::class, 'index'])->name('admins.index');
+        Route::post('/', [AdminController::class, 'store'])->name('admins.store');
+        Route::get('/{admin}/edit', [AdminController::class, 'edit'])->name('admins.edit');
+        Route::put('/{admin}', [AdminController::class, 'update'])->name('admins.update');
+        Route::delete('/{admin}', [AdminController::class, 'destroy'])->name('admins.destroy');
+        Route::patch('/{admin}/toggle-status', [AdminController::class, 'toggleStatus'])->name('admins.toggle-status');
+    });
+    
+    // Admin Logs
+    Route::group(['prefix' => 'logs', 'as' => 'logs.'], function () {
+        Route::get('/', [AdminLogController::class, 'index'])->name('index');
+        Route::get('/{log}', [AdminLogController::class, 'show'])->name('show');
+        Route::get('/export', [AdminLogController::class, 'export'])->name('export');
+        Route::get('/filter', [AdminLogController::class, 'filter'])->name('filter');
+        Route::post('/clear', [AdminLogController::class, 'clear'])->name('clear');
+    });
+});
 
 Route::prefix('keranjang')->group(function () {
     Route::get('/{id_pengguna}', [CartController::class, 'show']); // Menampilkan isi keranjang
