@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\adminModels;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -39,5 +39,10 @@ class Admin extends Authenticatable
             return asset('storage/' . $this->image);
         }
         return asset('images/default-profile.png');
+    }
+
+    public function logs()
+    {
+        return $this->hasMany(AdminLog::class);
     }
 } 

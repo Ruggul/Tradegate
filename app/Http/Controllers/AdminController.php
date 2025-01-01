@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\adminControllers;
 
 use App\Models\Admin;
 use App\Models\AdminLog;
@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
 
 class AdminController extends Controller
 {
@@ -101,5 +103,31 @@ class AdminController extends Controller
         AdminLog::log(auth()->id(), 'toggle_admin_status', "Admin {$admin->name} {$status}");
 
         return back()->with('success', 'Admin status updated successfully');
+    }
+
+    public function login(Request $request): RedirectResponse
+    {
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
+        if (Auth::guard('admin')->attempt($credentials, $request->remember)) {
+            $request->session()->regenerate();
+            return redirect()->intended(route('admin.index'));
+        }
+
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
+    }
+
+    public function logout(Request $request): RedirectResponse
+    {
+        Auth::guard('admin')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        
+        return redirect()->route('admin.login');
     }
 } 
