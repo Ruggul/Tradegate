@@ -1,8 +1,10 @@
+<?php
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePerusahaanTable extends Migration
+return new class extends Migration
 {
     public function up()
     {
@@ -22,4 +24,4 @@ class CreatePerusahaanTable extends Migration
     {
         Schema::dropIfExists('perusahaan');
     }
-} 
+};
