@@ -23,13 +23,18 @@ class Pabrik extends Model
         'nomor_telepon',
         'email',
         'npwp',
-        'perushaan_id'
         
     ];
 
-    // Relasi dengan Departemen
-    public function perusahaan()
+    // Relasi dengan Dokumen
+    public function dokumen()
     {
-        return $this->belongsTo(Perushaan::class, 'perusahaan_id');
+        return $this->hasMany(Dokumen::class, 'id_perusahaan');
+    }
+
+    // Relasi dengan Karyawan 
+    public function karyawan()
+    {
+        return $this->hasMany(KaryawanPabrik::class, 'id_pabrik');
     }
 }
