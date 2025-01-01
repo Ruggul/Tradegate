@@ -28,4 +28,8 @@ class Pabrik extends Model
     ];
 
     // Relasi dengan Departemen
-   
+    public function pabrik()
+    {
+        return $this->belongsTo(Pabrik::class, 'pabrik_id');
+    }
+}
