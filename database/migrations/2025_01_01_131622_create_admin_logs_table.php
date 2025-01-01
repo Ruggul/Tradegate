@@ -10,12 +10,10 @@ class CreateAdminLogsTable extends Migration
     {
         Schema::create('admin_logs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('admin_id');
-            $table->string('action');
+            $table->foreignId('admin_id')->constrained('admins')->onDelete('cascade');
+            $table->string('action', 50)->index();
             $table->text('description')->nullable();
             $table->timestamps();
-
-            $table->foreign('admin_id')->references('id')->on('admins');
         });
     }
 

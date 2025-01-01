@@ -79,4 +79,18 @@ class AdminLog extends Model
             'export_logs' => 'Export Logs'
         ];
     }
+
+    /**
+     * Get formatted data for PDF
+     */
+    public function getExportData(): array
+    {
+        return [
+            'ID' => $this->id,
+            'Admin' => $this->admin->name ?? 'N/A',
+            'Action' => self::getAvailableActions()[$this->action] ?? $this->action,
+            'Description' => $this->description ?? '-',
+            'Date' => $this->formatted_date
+        ];
+    }
 }

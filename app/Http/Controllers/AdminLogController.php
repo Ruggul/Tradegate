@@ -8,6 +8,7 @@ use Illuminate\View\View;
 use Illuminate\Http\Response;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\AdminLogsExport;
+use Barryvdh\DomPDF\Facade\Pdf as DomPDF;
 
 class AdminLogController extends Controller
 {
@@ -16,19 +17,7 @@ class AdminLogController extends Controller
      */
     public function index(Request $request) : View
     {
-        $query = AdminLog::with('admin')->latest();
-
-        // Filter by action if provided
-        if ($request->has('action')) {
-            $query->where('action', $request->action);
-        }
-
-        // Filter by admin if provided
-        if ($request->has('admin_id')) {
-            $query->where('admin_id', $request->admin_id);
-        }
-
-        $logs = $query->paginate(15);
+        $logs = $this->getFilteredLogs($request);
         return view('admin.logs.index', compact('logs'));
     }
 
@@ -59,19 +48,31 @@ class AdminLogController extends Controller
     }
 
     /**
-     * Export logs to Excel/CSV
+     * Export logs to PDF
      */
-    public function export() : Response
+    public function export(Request $request) : Response
     {
-        $logs = AdminLog::with('admin')->get();
+        $logs = AdminLog::with('admin')
+            ->when($request->filled('date_from') || $request->filled('date_to'), function($query) use ($request) {
+                $query->dateRange($request->date_from, $request->date_to);
+            })
+            ->when($request->filled('action'), function($query) use ($request) {
+                $query->byAction($request->action);
+            })
+            ->when($request->filled('admin_id'), function($query) use ($request) {
+                $query->where('admin_id', $request->admin_id);
+            })
+            ->get()
+            ->map->getExportData();
         
         AdminLog::log(
             auth()->id(),
             'export_logs',
-            'Exported admin logs'
+            'Exported admin logs to PDF'
         );
 
-        return Excel::download(new AdminLogsExport($logs), 'admin-logs.xlsx');
+        $pdf = DomPDF::loadView('admin.logs.pdf', ['logs' => $logs]);
+        return $pdf->download('admin-logs.pdf');
     }
 
     /**
@@ -79,26 +80,26 @@ class AdminLogController extends Controller
      */
     public function filter(Request $request) : View
     {
-        $query = AdminLog::with('admin');
-
-        // Filter by date range
-        if ($request->filled('date_from')) {
-            $query->whereDate('created_at', '>=', $request->date_from);
-        }
-        if ($request->filled('date_to')) {
-            $query->whereDate('created_at', '<=', $request->date_to);
-        }
-
-        // Existing filters
-        if ($request->filled('action')) {
-            $query->where('action', $request->action);
-        }
-        if ($request->filled('admin_id')) {
-            $query->where('admin_id', $request->admin_id);
-        }
-
-        $logs = $query->latest()->paginate(15);
-        
+        $logs = $this->getFilteredLogs($request);
         return view('admin.logs.index', compact('logs'));
+    }
+
+    /**
+     * Get filtered logs query
+     */
+    private function getFilteredLogs(Request $request)
+    {
+        return AdminLog::with('admin')
+            ->when($request->filled('date_from') || $request->filled('date_to'), function($query) use ($request) {
+                $query->dateRange($request->date_from, $request->date_to);
+            })
+            ->when($request->filled('action'), function($query) use ($request) {
+                $query->byAction($request->action);
+            })
+            ->when($request->filled('admin_id'), function($query) use ($request) {
+                $query->where('admin_id', $request->admin_id);
+            })
+            ->latest()
+            ->paginate(15);
     }
 }
