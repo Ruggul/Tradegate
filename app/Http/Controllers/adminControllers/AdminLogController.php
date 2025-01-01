@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\adminControllers;
 
+use App\Http\Controllers\Controller;
 use App\Models\AdminLog;
 use Illuminate\Http\Request;
 
